@@ -6,13 +6,17 @@ import (
 )
 
 func main() {
-	npuType, err := GetNpuType()
+	defer glog.Flush()
+
+	driverVersion, err := GetDriverVersion()
 	if err != nil {
-		glog.Fatalf("Failed to get NPU type: %v", err)
-	} else {
-		glog.Infof("Found NPU type: %s", npuType)
+		glog.Errorf("failed to get driver version: %v", err)
+		goto RUN
 	}
 
+	glog.Infof("NPU driver version: %s", driverVersion)
+
+RUN:
 	lister := &Lister{}
 	manager := dpm.NewManager(lister)
 

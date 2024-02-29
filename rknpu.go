@@ -7,26 +7,14 @@ import (
 )
 
 const (
-	compatiblePath = "/proc/device-tree/compatible"
+	driverVersionPath = "/sys/module/rknpu/version"
 )
 
-var (
-	SupportedNpuTypes = []string{
-		"rk3588",
-	}
-)
-
-func GetNpuType() (string, error) {
-	compatibleStr, err := os.ReadFile(compatiblePath)
+func GetDriverVersion() (string, error) {
+	version, err := os.ReadFile(driverVersionPath)
 	if err != nil {
-		return "", fmt.Errorf("failed to read %s: %v", compatiblePath, err)
+		return "", fmt.Errorf("failed to read driver version: %v", err)
 	}
 
-	for _, npuType := range SupportedNpuTypes {
-		if strings.Contains(string(compatibleStr), npuType) {
-			return npuType, nil
-		}
-	}
-
-	return "", fmt.Errorf("no supported NPU type found in %s", compatiblePath)
+	return strings.TrimSpace(string(version)), nil
 }

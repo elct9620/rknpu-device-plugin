@@ -28,8 +28,6 @@ spec:
         volumeMounts:
           - name: dp
             mountPath: /var/lib/kubelet/device-plugins
-          - name: proc
-            mountPath: /proc
           - name: sys
             mountPath: /sys
           - name: dev
@@ -38,9 +36,6 @@ spec:
         - name: dp
           hostPath:
             path: /var/lib/kubelet/device-plugins
-        - name: proc
-          hostPath:
-            path: /proc
         - name: sys
           hostPath:
             path: /sys
