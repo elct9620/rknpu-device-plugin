@@ -8,6 +8,7 @@ import (
 
 const (
 	driverVersionPath = "/sys/module/rknpu/version"
+	devicePath        = "/dev/dri/renderD129"
 )
 
 func GetDriverVersion() (string, error) {
