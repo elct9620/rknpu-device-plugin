@@ -19,7 +19,7 @@ spec:
       - key: CriticalAddonsOnly
         operator: Exists
       containers:
-      - image: ghcr.io/elct9620/rknpu-device-plugin:main
+      - image: ghcr.io/elct9620/rknpu-device-plugin
         name: rknpu-dp-cntr
         securityContext:
           allowPrivilegeEscalation: false
@@ -30,6 +30,8 @@ spec:
             mountPath: /var/lib/kubelet/device-plugins
           - name: proc
             mountPath: /proc
+          - name: sys
+            mountPath: /sys
           - name: dev
             mountPath: /dev
       volumes:
@@ -39,6 +41,9 @@ spec:
         - name: proc
           hostPath:
             path: /proc
+        - name: sys
+          hostPath:
+            path: /sys
         - name: dev
           hostPath:
             path: /dev
