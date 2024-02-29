@@ -21,11 +21,42 @@ func (p *Plugin) PreStartContainer(ctx context.Context, r *pluginapi.PreStartCon
 }
 
 func (p *Plugin) ListAndWatch(e *pluginapi.Empty, s pluginapi.DevicePlugin_ListAndWatchServer) error {
-	return nil
+	devices := []*pluginapi.Device{
+		{
+			ID:     devicePath,
+			Health: pluginapi.Healthy,
+		},
+	}
+
+	s.Send(&pluginapi.ListAndWatchResponse{Devices: devices})
+
+	for {
+		select {}
+	}
 }
 
 func (p *Plugin) Allocate(ctx context.Context, r *pluginapi.AllocateRequest) (*pluginapi.AllocateResponse, error) {
-	return nil, nil
+	var response pluginapi.AllocateResponse
+	var car pluginapi.ContainerAllocateResponse
+	var dev *pluginapi.DeviceSpec
+
+	for _, req := range r.ContainerRequests {
+		car = pluginapi.ContainerAllocateResponse{}
+
+		for _, id := range req.DevicesIDs {
+			dev = &pluginapi.DeviceSpec{
+				ContainerPath: id,
+				HostPath:      id,
+				Permissions:   "rw",
+			}
+
+			car.Devices = append(car.Devices, dev)
+		}
+
+		response.ContainerResponses = append(response.ContainerResponses, &car)
+	}
+
+	return &response, nil
 }
 
 func (p *Plugin) GetPreferredAllocation(context.Context, *pluginapi.PreferredAllocationRequest) (*pluginapi.PreferredAllocationResponse, error) {
