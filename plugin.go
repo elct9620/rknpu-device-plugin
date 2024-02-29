@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 
+	"github.com/golang/glog"
 	"github.com/kubevirt/device-plugin-manager/pkg/dpm"
 	pluginapi "k8s.io/kubelet/pkg/apis/deviceplugin/v1beta1"
 )
@@ -44,6 +45,8 @@ func (p *Plugin) Allocate(ctx context.Context, r *pluginapi.AllocateRequest) (*p
 		car = pluginapi.ContainerAllocateResponse{}
 
 		for _, id := range req.DevicesIDs {
+			glog.Infof("Allocating device ID: %s", id)
+
 			dev = &pluginapi.DeviceSpec{
 				ContainerPath: id,
 				HostPath:      id,
