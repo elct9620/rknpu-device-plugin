@@ -3,7 +3,7 @@ module github.com/elct9620/rknpu-device-plugin
 go 1.21.6
 
 require (
-	github.com/golang/glog v1.2.0
+	github.com/golang/glog v1.2.4
 	github.com/kubevirt/device-plugin-manager v1.19.5
 	k8s.io/kubelet v0.29.2
 )
