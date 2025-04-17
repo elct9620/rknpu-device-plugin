@@ -1,6 +1,7 @@
 module github.com/elct9620/rknpu-device-plugin
 
-go 1.21.6
+go 1.23.0
+
 toolchain go1.24.1
 
 require (
