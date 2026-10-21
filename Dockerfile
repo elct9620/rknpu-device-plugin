@@ -1,4 +1,4 @@
-FROM docker.io/golang:1.23-alpine3.21 AS builder
+FROM docker.io/golang:1.27-alpine3.24 AS builder
 
 RUN mkdir -p /go/src/github.com/elct9620/rknpu-device-plugin
 ADD . /go/src/github.com/elct9620/rknpu-device-plugin
